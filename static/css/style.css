@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.navbar-nav.custom-gap .nav-link {
+    margin-right: 50px; /* Adjust this value to reduce or increase the gap */
+}
+.navbar {
+    border-bottom: 2px solid #f8f9fa;
+    padding-right: 10px;
+}
+
+.content-box {
+    background-color: #e0f7fa; /* Light teal background for the content box */
+    border-radius: 0 80px 80px 0; /* Rounded only on the left side */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.building-img {
+    max-width: 250px; /* Set the width of the image */
+    border-radius: 10px;
+}
+.header-box {
+    background-color: #a2ded0; /* Light green background */
+    border-radius: 50px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    font-weight: bold;
+    color: #000; /* Text color */
+}
+
+.header-box h2 {
+    margin: 0; /* Remove margin */
+    font-size: 1.5rem; /* Font size */
+    font-weight: bold; /* Bold text */
+}
+
+.info-card {
+    background-color: #e0f7fa; /* Light background for cards */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-10px); /* Hover effect */
+}
+
+.icon {
+    width: 50px; /* Icon size */
+    height: 50px; /* Icon size */
+}
+.background-box {
+    background-color: #78c2ad; /* Main background color for the section */
+    border-radius: 15px; /* Rounded corners for the background box */
+    padding: 30px; /* Padding around the content */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    margin: auto; /* Center the container */
+}
+
+.header-box {
+    background-color: #a2ded0; /* Light green background for the header */
+    border-radius: 50px; /* Fully rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    font-weight: bold;
+    color: #000; /* Text color */
+}
+
+.header-box h2 {
+    margin: 0; /* Remove margin */
+    font-size: 1.5rem; /* Font size */
+    font-weight: bold; /* Bold text */
+}
+
+.info-card {
+    background-color: #e0f7fa; /* Light background for cards */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-10px); /* Hover effect */
+}
+
+.icon {
+    width: 50px; /* Icon size */
+    height: 50px; /* Icon size */
+}

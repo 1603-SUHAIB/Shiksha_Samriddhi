@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Monitoring Admin Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #f1f1f1;
+            height: 100vh;
+            padding: 20px;
+        }
+        #main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .nav-item {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .zone-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+        }
+        .red { background-color: #FF4136; }
+        .orange { background-color: #FF851B; }
+        .yellow { background-color: #FFDC00; color: black; }
+        .green { background-color: #2ECC40; }
+        .chart-container {
+            height: 300px;
+        }
+        .alert {
+            background-color: #FF4136;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Quick Access</h2>
+        <div class="nav-item">Overview</div>
+        <div class="nav-item">Progress Tracking</div>
+        <div class="nav-item">Resource Allocation</div>
+        <div class="nav-item">Reports</div>
+        <div class="nav-item">Alerts</div>
+        <div class="nav-item">Settings</div>
+    </div>
+    <div id="main-content">
+        <h1>School Monitoring Admin Dashboard</h1>
+
+        <div class="card">
+            <h2>Overview</h2>
+            <div class="grid">
+                <div>
+                    <h3>Total Schools Monitored</h3>
+                    <p id="total-schools">Loading...</p>
+                </div>
+                <div>
+                    <h3>Overall Progress</h3>
+                    <div id="overall-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Progress Tracking</h2>
+            <div class="grid">
+                <div class="chart-container">
+                    <canvas id="transition-progress-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="school-count-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Color-Coded Zone Metrics</h2>
+            <div class="grid">
+                <div class="zone-card red">
+                    <h3>Red Zone</h3>
+                    <p id="red-zone-count">Loading...</p>
+                    <p>Common issues: Urgent infrastructure repairs needed</p>
+                </div>
+                <div class="zone-card orange">
+                    <h3>Orange Zone</h3>
+                    <p id="orange-zone-count">Loading...</p>
+                    <p>Common issues: Teacher shortage</p>
+                </div>
+                <div class="zone-card yellow">
+                    <h3>Yellow Zone</h3>
+                    <p id="yellow-zone-count">Loading...</p>
+                    <p>Enrollment issues: Overcrowding in certain grades</p>
+                </div>
+                <div class="zone-card green">
+                    <h3>Green Zone</h3>
+                    <p id="green-zone-count">Loading...</p>
+                    <p>Best practices: Innovative teaching methods</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Detailed School Profiles</h2>
+            <input type="text" id="school-search" placeholder="Search schools...">
+            <select id="zone-filter">
+                <option value="">All Zones</option>
+                <option value="red">Red Zone</option>
+                <option value="orange">Orange Zone</option>
+                <option value="yellow">Yellow Zone</option>
+                <option value="green">Green Zone</option>
+            </select>
+            <div id="school-list"></div>
+        </div>
+
+        <div class="card">
+            <h2>Resource Allocation</h2>
+            <div class="grid">
+                <div>
+                    <h3>Funding Overview</h3>
+                    <p>Total Allocated: $<span id="total-allocated">Loading...</span></p>
+                    <p>Total Spent: $<span id="total-spent">Loading...</span></p>
+                    <p>Pending Requests: $<span id="pending-requests">Loading...</span></p>
+                </div>
+                <div>
+                    <h3>Resource Utilization</h3>
+                    <p id="resource-utilization">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="alerts-section"> <!-- Added id "alerts-section" -->
+    <h2>Alerts and Notifications</h2>
+    <div id="alerts-container"></div>
+</div>
+
+
+        <div class="card">
+            <h2>Historical Data and Trends</h2>
+            <div class="chart-container">
+                <canvas id="historical-trend-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Support Resources</h2>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Support Team</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Mock data - replace with actual data in a real application
+        const mockData = {
+            totalSchools: 1000,
+            zoneDistribution: {
+                red: 150,
+                orange: 250,
+                yellow: 350,
+                green: 250
+            },
+            funding: {
+                allocated: 10000000,
+                spent: 7500000,
+                pending: 1500000
+            },
+            alerts: [
+                { type: 'critical', message: 'Urgent repairs needed at Springfield Elementary' },
+                { type: 'deadline', message: 'Teacher certification deadline approaching for 50 schools' }
+            ],
+            historicalData: [
+                { year: 2020, red: 300, orange: 400, yellow: 200, green: 100 },
+                { year: 2021, red: 250, orange: 350, yellow: 250, green: 150 },
+                { year: 2022, red: 200, orange: 300, yellow: 300, green: 200 },
+                { year: 2023, red: 150, orange: 250, yellow: 350, green: 250 }
+            ]
+        };
+
+        // Update dashboard with mock data
+        document.getElementById('total-schools').textContent = mockData.totalSchools;
+        document.getElementById('red-zone-count').textContent = mockData.zoneDistribution.red;
+        document.getElementById('orange-zone-count').textContent = mockData.zoneDistribution.orange;
+        document.getElementById('yellow-zone-count').textContent = mockData.zoneDistribution.yellow;
+        document.getElementById('green-zone-count').textContent = mockData.zoneDistribution.green;
+
+        document.getElementById('total-allocated').textContent = mockData.funding.allocated.toLocaleString();
+        document.getElementById('total-spent').textContent = mockData.funding.spent.toLocaleString();
+        document.getElementById('pending-requests').textContent = mockData.funding.pending.toLocaleString();
+
+        // Display alerts
+        const alertsContainer = document.getElementById('alerts-container');
+        mockData.alerts.forEach(alert => {
+            const alertElement = document.createElement('div');
+            alertElement.classList.add('alert');
+            alertElement.textContent = alert.message;
+            alertsContainer.appendChild(alertElement);
+        });
+
+        // Create charts
+        const ctx1 = document.getElementById('transition-progress-chart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Orange', 'Yellow', 'Green'],
+                datasets: [{
+                    label: 'Number of Schools',
+                    data: [mockData.zoneDistribution.red, mockData.zoneDistribution.orange, mockData.zoneDistribution.yellow, mockData.zoneDistribution.green],
+                    backgroundColor: ['#FF4136', '#FF851B', '#FFDC00', '#2ECC40']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('school-count-chart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Red', 'Orange', 'Yellow', 'Green'],
+                datasets: [{
+                    data: [mockData.zoneDistribution.red, mockData.zoneDistribution.orange, mockData.zoneDistribution.yellow, mockData.zoneDistribution.green],
+                    backgroundColor: ['#FF4136', '#FF851B', '#FFDC00', '#2ECC40']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        const ctx3 = document.getElementById('historical-trend-chart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: mockData.historicalData.map(d => d.year),
+                datasets: [
+                    {
+                        label: 'Red Zone',
+                        data: mockData.historicalData.map(d => d.red),
+                        borderColor: '#FF4136',
+                        fill: false
+                    },
+                    {
+                        label: 'Orange Zone',
+                        data: mockData.historicalData.map(d => d.orange),
+                        borderColor: '#FF851B',
+                        fill: false
+                    },
+                    {
+                        label: 'Yellow Zone',
+                        data: mockData.historicalData.map(d => d.yellow),
+                        borderColor: '#FFDC00',
+                        fill: false
+                    },
+                    {
+                        label: 'Green Zone',
+                        data: mockData.historicalData.map(d => d.green),
+                        borderColor: '#2ECC40',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add interactivity (you can expand on this)
+        document.getElementById('submit-feedback').addEventListener('click', function() {
+            const feedback = document.getElementById('feedback-input').value;
+            alert('Feedback submitted: ' + feedback);
+            document.getElementById('feedback-input').value = '';
+        });
+
+        document.getElementById('school-search').addEventListener('input', function() {
+            // Implement school search functionality
+            console.log('Searching for:', this.value);
+        });
+
+        document.getElementById('zone-filter').addEventListener('change', function() {
+            // Implement zone filtering functionality
+            console.log('Filtering by zone:', this.value);
+        });
+    </script>
+</body>
+</html>

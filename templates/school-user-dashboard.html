@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School User Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f0f0f0;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        #main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .nav-item {
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .nav-item:hover {
+            background-color: #555;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 20px;
+            background-color: #4CAF50;
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+        .zone-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+        }
+        .red { background-color: #FF4136; }
+        .orange { background-color: #FF851B; }
+        .yellow { background-color: #FFDC00; color: black; }
+        .green { background-color: #2ECC40; }
+        .alert {
+            background-color: #FF4136;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .action-item {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Quick Links</h2>
+        <div class="nav-item">Overview</div>
+        <div class="nav-item">Progress Tracking</div>
+        <div class="nav-item">Zone Information</div>
+        <div class="nav-item">School Profile</div>
+        <div class="nav-item">Resource Requests</div>
+        <div class="nav-item">Alerts</div>
+        <div class="nav-item">Support</div>
+    </div>
+    <div id="main-content">
+        <h1>School User Dashboard</h1>
+
+        <div class="card">
+            <h2>Overview</h2>
+            <div class="grid">
+                <div>
+                    <h3>Current Status</h3>
+                    <p>Zone: <span id="current-zone">Loading...</span></p>
+                    <p>Transition Status: <span id="transition-status">Loading...</span></p>
+                </div>
+                <div>
+                    <h3>Key Metrics</h3>
+                    <p>Progress: <span id="progress-percentage">Loading...</span></p>
+                    <p>Pending Actions: <span id="pending-actions-count">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="progress-section">
+            <h2>Progress Tracking</h2>
+            <h3>School Transition Status</h3>
+            <div class="progress-bar">
+                <div id="progress-bar" class="progress"></div>
+            </div>
+            <p>Next Steps: <span id="next-steps">Loading...</span></p>
+            <h3>Pending Actions</h3>
+            <div id="pending-actions-list"></div>
+        </div>
+
+        <div class="card">
+            <h2>Color-Coded Zone Information</h2>
+            <div id="zone-info" class="zone-card">
+                <h3>Current Zone Details</h3>
+                <p id="zone-issues">Loading...</p>
+                <h3>Guidelines for Improvement</h3>
+                <p id="zone-guidelines">Loading...</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Detailed School Information</h2>
+            <h3>Profile Overview</h3>
+            <p>Grade Configuration: <span id="grade-config">Loading...</span></p>
+            <p>Infrastructure Status: <span id="infrastructure-status">Loading...</span></p>
+            <p>Teacher Qualifications: <span id="teacher-quals">Loading...</span></p>
+            <h3>Action Plan</h3>
+            <div id="action-plan"></div>
+        </div>
+
+        <div class="card" id="resource-request">
+            <h2>Resource Requests</h2>
+            <h3>Funding Requests</h3>
+            <div id="funding-requests"></div>
+            <h3>Resource Utilization</h3>
+            <p id="resource-utilization">Loading...</p>
+        </div>
+
+        <div class="card" id="alerts-section">
+            <h2>Alerts and Notifications</h2>
+            <h3>Upcoming Deadlines</h3>
+            <div id="upcoming-deadlines"></div>
+            <h3>Recent Updates</h3>
+            <div id="recent-updates"></div>
+        </div>
+
+        <div class="card">
+            <h2>Feedback and Support</h2>
+            <h3>Feedback Form</h3>
+            <textarea id="feedback-input" placeholder="Provide your feedback or request support..."></textarea>
+            <button id="submit-feedback">Submit Feedback</button>
+            <h3>Contact Information</h3>
+            <p>Support Email: support@schooltransition.org</p>
+            <p>Helpline: 1-800-SCHOOL-HELP</p>
+        </div>
+    </div>
+
+    <script>
+        // Mock data - replace with actual data in a real application
+        const mockData = {
+            currentZone: 'Yellow',
+            transitionStatus: 'In Progress',
+            progressPercentage: 65,
+            pendingActionsCount: 3,
+            nextSteps: 'Complete teacher training program',
+            pendingActions: [
+                'Submit updated infrastructure report',
+                'Complete teacher training program',
+                'Implement new curriculum guidelines'
+            ],
+            zoneIssues: 'Moderate infrastructure improvements needed, teacher training in progress',
+            zoneGuidelines: 'Focus on completing teacher training and addressing minor infrastructure issues',
+            schoolProfile: {
+                gradeConfig: 'K-12',
+                infrastructureStatus: 'Satisfactory, minor improvements needed',
+                teacherQuals: '80% meet new standards, 20% in training'
+            },
+            actionPlan: [
+                'Finish ongoing teacher training programs by end of month',
+                'Address classroom ventilation issues in science wing',
+                'Implement new math curriculum in grades 6-8'
+            ],
+            fundingRequests: [
+                { purpose: 'Science Lab Equipment', amount: 50000, status: 'Approved' },
+                { purpose: 'Teacher Training Workshop', amount: 15000, status: 'Pending' }
+            ],
+            resourceUtilization: '75% of allocated resources have been utilized effectively',
+            upcomingDeadlines: [
+                { task: 'Submit Q3 Progress Report', date: '2023-09-30' },
+                { task: 'Complete Teacher Certifications', date: '2023-10-15' }
+            ],
+            recentUpdates: [
+                'New funding approved for science lab equipment',
+                'Updated transition guidelines released - please review'
+            ]
+        };
+
+        // Update dashboard with mock data
+        document.getElementById('current-zone').textContent = mockData.currentZone;
+        document.getElementById('transition-status').textContent = mockData.transitionStatus;
+        document.getElementById('progress-percentage').textContent = mockData.progressPercentage + '%';
+        document.getElementById('pending-actions-count').textContent = mockData.pendingActionsCount;
+        document.getElementById('next-steps').textContent = mockData.nextSteps;
+        document.getElementById('zone-issues').textContent = mockData.zoneIssues;
+        document.getElementById('zone-guidelines').textContent = mockData.zoneGuidelines;
+        document.getElementById('grade-config').textContent = mockData.schoolProfile.gradeConfig;
+        document.getElementById('infrastructure-status').textContent = mockData.schoolProfile.infrastructureStatus;
+        document.getElementById('teacher-quals').textContent = mockData.schoolProfile.teacherQuals;
+        document.getElementById('resource-utilization').textContent = mockData.resourceUtilization;
+
+        // Set progress bar
+        document.getElementById('progress-bar').style.width = mockData.progressPercentage + '%';
+
+        // Set zone card color
+        const zoneInfo = document.getElementById('zone-info');
+        zoneInfo.classList.add(mockData.currentZone.toLowerCase());
+
+        // Populate pending actions
+        const pendingActionsList = document.getElementById('pending-actions-list');
+        mockData.pendingActions.forEach(action => {
+            const actionItem = document.createElement('div');
+            actionItem.classList.add('action-item');
+            actionItem.textContent = action;
+            pendingActionsList.appendChild(actionItem);
+        });
+
+        // Populate action plan
+        const actionPlan = document.getElementById('action-plan');
+        mockData.actionPlan.forEach(action => {
+            const actionItem = document.createElement('div');
+            actionItem.classList.add('action-item');
+            actionItem.textContent = action;
+            actionPlan.appendChild(actionItem);
+        });
+
+        // Populate funding requests
+        const fundingRequests = document.getElementById('funding-requests');
+        mockData.fundingRequests.forEach(request => {
+            const requestItem = document.createElement('div');
+            requestItem.classList.add('action-item');
+            requestItem.textContent = `${request.purpose}: $${request.amount} - ${request.status}`;
+            fundingRequests.appendChild(requestItem);
+        });
+
+        // Populate upcoming deadlines
+        const upcomingDeadlines = document.getElementById('upcoming-deadlines');
+        mockData.upcomingDeadlines.forEach(deadline => {
+            const deadlineItem = document.createElement('div');
+            deadlineItem.classList.add('action-item');
+            deadlineItem.textContent = `${deadline.task} - Due: ${deadline.date}`;
+            upcomingDeadlines.appendChild(deadlineItem);
+        });
+
+        // Populate recent updates
+        const recentUpdates = document.getElementById('recent-updates');
+        mockData.recentUpdates.forEach(update => {
+            const updateItem = document.createElement('div');
+            updateItem.classList.add('action-item');
+            updateItem.textContent = update;
+            recentUpdates.appendChild(updateItem);
+        });
+
+        // Add interactivity (you can expand on this)
+        document.getElementById('submit-feedback').addEventListener('click', function() {
+            const feedback = document.getElementById('feedback-input').value;
+            alert('Feedback submitted: ' + feedback);
+            document.getElementById('feedback-input').value = '';
+        });
+
+        // Simulate loading (remove in production)
+        setTimeout(() => {
+            document.body.style.opacity = 1;
+        }, 500);
+    </script>
+</body>
+</html>

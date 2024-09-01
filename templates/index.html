@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap JavaScript (for the carousel functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <img src="{{ url_for('static', filename='assets/logo.jpg') }}" style="width: 300px; height: 80px;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto custom-gap">
+                        <a class="nav-link" href="{{ url_for('index') }}" >Home</a>
+                        <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+                        <a class="nav-link" href="{{ url_for('community') }}">Community Engagement</a>
+                        <a class="nav-link" href="#">Contact Us</a>
+                </ul>
+                <a href="{{ url_for('loginall') }}" class="btn btn-warning">Login for all modules</a>
+            </div>
+        </div>
+    </nav>
+        <!-- Hero Section with Image Slider -->
+<section id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+
+
+    <!-- Carousel Items -->
+    <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='assets/home.png') }}" alt="Slide 1" class="d-block w-100 img-fluid rounded">
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='assets/home.png') }}" alt="Slide 2" class="d-block w-100 img-fluid rounded">
+        </div>
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='assets/home.png') }}" alt="Slide 3" class="d-block w-100 img-fluid rounded">
+        </div>
+    </div>
+    <!-- Controls (Optional) -->
+    <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
+
+    <!-- Get Started Button -->
+    <div class="carousel-caption d-none d-md-block">
+        <button class="btn btn-warning">
+            <a href="{{ url_for('loginall') }}" style="color: inherit; text-decoration: none;">Get Started</a>
+        </button>
+    </div>
+</section>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content-box p-4">
+                <h2 class="font-weight-bold">Brief Overview</h2>
+                <p>Across India, many schools are categorized as having 'odd structures.' These are schools that, due to historical, geographical, or administrative reasons, do not follow the standard grade configurations or lack necessary facilities. This leads to challenges in resource allocation, curriculum implementation, and ultimately, student outcomes. Aligning these schools with the Samagra Shiksha framework is essential to ensure every child receives a high-quality education, regardless of where they live.</p>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <img src="{{ url_for('static', filename='assets/school.png') }}" alt="School Building" class="img-fluid building-img">
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <!-- Main Background Container -->
+    <div class="background-box p-4">
+        <!-- Header Section -->
+        <div class="header-box text-center p-3 mb-4">
+            <img src="{{ url_for('static', filename='assets/cap.png') }}" alts="graduation cap" class="mb-3 icon">
+            <h2> ABOUT SCHOOL</h2>
+        </div>
+
+        <!-- Card Section -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="info-card text-center p-4">
+                    <a href="{{ url_for('map') }}" target="_blank" style="text-decoration: none; color: black;">
+                        <img src="{{ url_for('static', filename='assets/geo.png') }}" alt="GIS Mapping Icon" class="mb-3 icon">
+                        <h5>GIS MAPPING</h5></a>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="info-card text-center p-4">
+                    <a href="ai_tool.html" target="_blank" style="text-decoration: none; color: black;">
+                    <img src="{{ url_for('static', filename='assets/dashboard.png') }}" alt="Dashboard Icon" class="mb-3 icon">
+                    <h5>DASHBOARD</h5>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="info-card text-center p-4">
+                    <img src="{{ url_for('static', filename='assets/dashboard.png') }}" alt="Scheme Icon" class="mb-3 icon">
+                    <h5>SCHEME</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

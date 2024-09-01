@@ -1,0 +1,204 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.navbar-nav.custom-gap .nav-link {
+    margin-right: 50px; /* Adjust this value to reduce or increase the gap */
+}
+.navbar {
+    border-bottom: 2px solid #f8f9fa;
+    padding-right: 10px;
+}
+
+.content-box {
+    background-color: #e0f7fa; /* Light teal background for the content box */
+    border-radius: 0 80px 80px 0; /* Rounded only on the left side */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.building-img {
+    max-width: 250px; /* Set the width of the image */
+    border-radius: 10px;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-link {
+    font-weight: bold;
+    color: black !important;
+}
+
+.btn-orange {
+    background-color: #f8860a;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.container {
+    background-color: #e8f8ff; /* Light blue background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.indicator-box {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+    background-color: #e8f8ff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+.description {
+    color: #333;
+    font-size: 0.9rem;
+    max-width: 200px;
+}
+h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+hr {
+    border-top: 2px solid #eee;
+}
+
+p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.btn-purple {
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 20px;
+}
+
+.btn-purple:hover {
+    background-color: #5a32a3;
+    color: white;
+}
+
+.btn-outline-dark {
+    border-radius: 20px;
+}
+
+.school-name {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+}
+
+.warning-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-icon {
+    position: relative;
+    width: 50px;
+    height: 70px;
+    background-color: #ff4c4c;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    overflow: hidden;
+}
+
+.pin-circle {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    background-color: #ff6f6f;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.pin-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.color-bar {
+    width: 100%;
+    height: 25px;
+    background: linear-gradient(to right,green, yellow,orange, red);
+    border-radius: 15px;
+}
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-body p {
+    margin-bottom: 0;
+}
+
+.btn-link {
+    font-size: 1rem;
+    text-align: left;
+    color: #fff;
+    padding: 0;
+    text-decoration: none;
+}
+.mass{
+  width: 100%;
+}
+.card-header {
+    background-color: #17a2b8;
+    padding: 0.5rem 1rem;
+}
+
+.card-header .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+
+}
+
+.card-body h5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.collapse {
+    padding: 1rem;
+}
+
+hr {
+    margin: 0.5rem 0;
+}
+
+
